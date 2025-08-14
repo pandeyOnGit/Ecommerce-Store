@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // --- CUSTOMIZE THIS VARIABLE ---
-        DOCKER_IMAGE = "adityapandey/ecommerce-store" // Use your Docker Hub username/repo
+        DOCKER_IMAGE = "pandeyonwork/ecommerce-store" // Use your Docker Hub username/repo
         PROD_SERVER_IP = "3.110.103.157"
         PROD_SERVER_USER = "ubuntu"
         CONTAINER_NAME = "my-react-app"
