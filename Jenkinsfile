@@ -28,13 +28,13 @@ pipeline {
             }
         }
 
-        stage('Deploy to Production Server') {
+       stage('Deploy to Production Server') {
             steps {
                 sshagent(['prod-server-ssh-key']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no ${PROD_SERVER_USER}@${PROD_SERVER_IP} "
                             echo '--- Pulling latest Docker image ---'
-                            sudo docker pull ${DOCK_IMAGE}:latest
+                            sudo docker pull ${DOCKER_IMAGE}:latest
 
                             echo '--- Stopping and removing old container ---'
                             sudo docker stop ${CONTAINER_NAME} || true
