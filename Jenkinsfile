@@ -33,10 +33,15 @@ pipeline {
                 sshagent(['prod-server-ssh-key']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no ${PROD_SERVER_USER}@${PROD_SERVER_IP} "
-                            docker pull ${DOCKER_IMAGE}:latest
-                            docker stop ${CONTAINER_NAME} || true
-                            docker rm ${CONTAINER_NAME} || true
-                            docker run -d --name ${CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE}:latest
+                            echo '--- Pulling latest Docker image ---'
+                            sudo docker pull ${DOCK_IMAGE}:latest
+
+                            echo '--- Stopping and removing old container ---'
+                            sudo docker stop ${CONTAINER_NAME} || true
+                            sudo docker rm ${CONTAINER_NAME} || true
+
+                            echo '--- Starting new container on port 80 ---'
+                            sudo docker run -d --name ${CONTAINER_NAME} -p 80:80 ${DOCKER_IMAGE}:latest
                         "
                     '''
                 }
