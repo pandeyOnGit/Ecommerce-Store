@@ -17,11 +17,13 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-                        // This line is updated for better security
                         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin'
                     }
-                    def customImage = docker.build(DOCKER_IMAGE)
-                    customImage.push('latest')
+                    
+                    // --- REPLACED COMMANDS ---
+                    sh "docker build -t ${DOCKER_IMAGE} ."
+                    sh "docker push ${DOCKER_IMAGE}:latest"
+                    // --- END REPLACED COMMANDS ---
                 }
             }
         }
