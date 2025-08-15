@@ -1,75 +1,74 @@
-# E-Commerce Site
+E-Commerce Store - A Fully Automated CI/CD Project
+This repository contains the source code for a modern e-commerce web application. The project serves as a demonstration of a complete CI/CD pipeline, automating the entire process from code commit to a live, containerized deployment on the cloud.
 
-This is a full-stack E-Commerce site developed using React, Node.js, React Redux Toolkit, and Bootstrap. The project aims to provide a seamless shopping experience with a user-friendly interface and robust backend support.
+Live Demo: http://3.110.103.157
 
-## Features
+🚀 Project Overview
+This is a feature-rich e-commerce platform built with React. The primary focus of this repository is not just the application itself, but the underlying DevOps infrastructure that powers its deployment. The entire lifecycle of the application is automated, ensuring rapid, reliable, and consistent releases.
 
-- **Product Listing:** Browse a variety of products with detailed information.
-- **Search and Filter:** Easily find products using search and filter functionalities.
-- **Shopping Cart:** Add, remove, and update items in your cart.
-- **User Authentication:** Secure user login and registration.
-- **Order Management:** Place orders and view order history.
-- **Admin Panel:** Manage products, categories, and orders through an admin dashboard.
+🛠️ Tech Stack & Tools
+This project utilizes a modern stack for both application development and infrastructure automation.
 
-## Tech Stack
+Frontend: React.js
 
-- **Frontend:**
-  - [React](https://reactjs.org/): For building the user interface.
-  - [React Redux Toolkit](https://redux-toolkit.js.org/): For state management.
-  - [Bootstrap](https://getbootstrap.com/): For responsive and modern UI design.
+Cloud Provider: Amazon Web Services (AWS)
 
-- **Backend:**
-  - [Node.js](https://nodejs.org/): For server-side logic and API endpoints.
+CI/CD Automation: Jenkins
 
-- **Database:**
-  - [MongoDB](https://www.mongodb.com/): (If used, mention here) For storing user data, products, and orders.
+Containerization: Docker
 
-## Installation
+Container Registry: Docker Hub
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/ecommerce-site.git
-Navigate to the project directory:
-bash
-Copy code
-cd ecommerce-site
-Install the dependencies for both frontend and backend:
-bash
-Copy code
-cd frontend
-npm install
-cd ../backend
-npm install
-Set up environment variables for the backend in a .env file (adjust the keys based on your configuration):
-makefile
-Copy code
-PORT=5000
-MONGO_URI=your_mongo_uri
-JWT_SECRET=your_jwt_secret
-Usage
-Run the backend server:
-bash
-Copy code
-cd backend
-npm start
-Run the frontend development server:
-bash
-Copy code
-cd frontend
-npm start
-The application will be accessible at http://localhost:3000.
+Container Orchestration: Kubernetes (EKS/Kops/Minikube)
 
-Folder Structure
-frontend/: Contains the React application.
-backend/: Contains the Node.js API.
-Screenshots
-(Add relevant screenshots here to showcase the app's features)
+🔄 CI/CD Pipeline Architecture
+The infrastructure is designed for full automation. When a developer pushes a new commit to the main branch on GitHub, the following CI/CD pipeline is triggered automatically:
 
-Contributing
-Contributions are welcome! Please fork this repository and submit a pull request for any feature enhancements or bug fixes.
+GitHub Webhook: A git push sends a webhook notification to the Jenkins server.
 
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
+Jenkins Job Trigger: Jenkins receives the webhook and starts the pre-configured pipeline job.
 
-Contact
-For any inquiries, please contact Aditya Pandey at [adityapandey4254@gmail.com].
+Build Stage: Jenkins checks out the latest source code and builds the React application inside a Docker container, creating a production-ready static build.
+
+Push Stage: The newly built Docker image is tagged and pushed to our Docker Hub repository.
+
+Deploy Stage: Jenkins securely connects to our Kubernetes cluster on AWS and applies the updated deployment configuration. Kubernetes then initiates a rolling update, gracefully terminating old application pods and launching new ones with the updated Docker image, ensuring zero downtime.
+
+🐳 Docker Configuration
+The application is containerized using a multi-stage Dockerfile for optimization.
+
+Build Stage: Uses a Node.js image to install dependencies and build the React application.
+
+Serve Stage: The static files from the build stage are copied into a lightweight Nginx image, resulting in a small and secure final image.
+
+The final image is hosted on Docker Hub and can be found here:
+Docker Hub Repository: https://hub.docker.com/r/pandeyonwork/ecommerce-store
+
+☸️ Kubernetes Deployment
+The application's deployment is managed by Kubernetes for scalability, resilience, and efficient resource management.
+
+Deployment: Manages the application's pods. It ensures that a specified number of replicas are always running and handles the rolling update strategy when a new image is deployed.
+
+Service: A LoadBalancer service is used to expose the application to the internet. It creates an AWS Elastic Load Balancer that routes external traffic to the application pods on port 80.
+
+The Kubernetes manifest files (deployment.yaml, service.yaml) defining this infrastructure are located in the k8s/ directory of this repository.
+
+Note: You will need to add your Kubernetes YAML files to a k8s/ directory for this section to be accurate.
+
+💻 How to Run Locally
+To run this project on your local machine, you will need Docker installed.
+
+Clone the repository:
+
+git clone https://github.com/pandeyOnGit/Ecommerce-Store.git
+cd Ecommerce-Store
+
+Build the Docker image:
+
+docker build -t ecommerce-store .
+
+Run the container:
+
+docker run -d -p 3000:80 ecommerce-store
+
+The application will be available at http://localhost:3000.
