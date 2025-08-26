@@ -1,7 +1,7 @@
 E-Commerce Store - A Fully Automated CI/CD Project
 This repository contains the source code for a modern e-commerce web application. The project serves as a demonstration of a complete CI/CD pipeline, automating the entire process from code commit to a live, containerized deployment on the cloud.
 
-Live Demo: http://3.110.103.157
+Live Demo: http://13.204.64.123
 
 🚀 Project Overview
 This is a feature-rich e-commerce platform built with React. The primary focus of this repository is not just the application itself, but the underlying DevOps infrastructure that powers its deployment. The entire lifecycle of the application is automated, ensuring rapid, reliable, and consistent releases.
